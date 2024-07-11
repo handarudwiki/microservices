@@ -11,6 +11,15 @@ const courseRouter = require('./routes/course');
 const refreshTokenRouter = require('./routes/refreshToken');
 const userRouter = require('./routes/user');
 const mentorRouter = require('./routes/mentor');
+const chapterRouter = require('./routes/chapter')
+const lessonRouter = require('./routes/lesson')
+const imageCourseRouter = require('./routes/imageCourse')
+const myCourseRouter = require('./routes/myCourse')
+const reviewRouter = require('./routes/review'); 
+const verifyTioken = require('./middleware/verifyTioken');
+const can = require('./middleware/permission')
+const webhookRouter = require('./routes/webhook')
+const orderrouter = require('./routes/order')
 
 const app = express();
 
@@ -28,12 +37,19 @@ app.listen(process.env.PORT,()=>{
   console.log(`listening on ${process.env.PORT}`);
 })
 
-app.use('/media', mediaRouter);
+app.use('/media', verifyTioken,can('admin', 'student'),mediaRouter);
 app.use('/users', userRouter);
-app.use('/auth', authRouter);
+app.use('/', authRouter);
+app.use('/chapters', verifyTioken, can('admin'),chapterRouter)
+app.use('/reviews', verifyTioken,can('admin', 'student'),reviewRouter)
+app.use('/image-courses', verifyTioken,can('admin'),imageCourseRouter)
+app.use('/my-courses',verifyTioken,can('admin', 'student'),myCourseRouter)
+app.use('/lessons', verifyTioken,can('admin'),lessonRouter)
 app.use('/courses', courseRouter);
 app.use('/refresh-token', refreshTokenRouter);
-app.use('/mentors',mentorRouter)
+app.use('/mentors',verifyTioken,can('admin'),mentorRouter)
+app.use('/webhook', webhookRouter)
+app.use('/orders', verifyTioken,can('admin', 'student'),orderrouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

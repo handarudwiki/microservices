@@ -24,7 +24,7 @@ router.post('/',async (req, res) => {
                 message : 'Invalid refresh token'
             })
         }
-
+        
         await api.get('/refresh-token', {params : {refresh_token: refreshToken}})
         // return res.json({refreshToken, JWT_SECRET_REFRESH_TOKEN})
         jwt.verify(refreshToken, JWT_SECRET_REFRESH_TOKEN, (err, decoded)=>{

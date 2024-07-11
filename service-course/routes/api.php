@@ -63,17 +63,18 @@ Route::controller(LessonController::class)
     });
 
 Route::controller(ImageCourseController::class)
-    ->prefix('image-course')
+    ->prefix('image-courses')
     ->group(function () {
         Route::post('/', 'store');
         Route::delete('/{id}', 'destroy');
     });
 
 Route::controller(MyCourseController::class)
-    ->prefix('my-course')
+    ->prefix('my-courses')
     ->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
+        Route::post('/premium', 'createPremiumAccess');
     });
 
 Route::controller(ReviewController::class)

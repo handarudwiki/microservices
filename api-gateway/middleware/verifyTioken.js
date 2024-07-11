@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
         if(err){
             return res.status(403).json({
                 status : 'error',
-                message : err.message
+                message :err.message
             })
         }
         req.user = decoded

@@ -60,6 +60,7 @@ class MentorController extends Controller
 
     public function update(Request $request, $id)
     {
+        // return response()->json($id);
         $mentor = Mentor::find($id);
         if (!$mentor) {
             return response()->json([
@@ -67,6 +68,7 @@ class MentorController extends Controller
                 'message' => 'mentor not found',
             ], 404);
         }
+
 
         if ($request['email'] !== $mentor['email']) {
             $rule = [
@@ -108,7 +110,7 @@ class MentorController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'mentor not found',
-            ], 400);
+            ], 404);
         }
 
         $mentor->delete();

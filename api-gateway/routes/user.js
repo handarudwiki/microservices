@@ -10,6 +10,7 @@ const api = apiAdapter(process.env.URL_SERVICE_USER)
 router.put('/', verifyTioken, async (req, res)=>{
     try {
         const id = req.user.data.data.id;
+        // return res.json(req.user)
         const user = await api.put(`/users/${id}`, req.body)
         const data = user.data
         return res.status(200).json(data)

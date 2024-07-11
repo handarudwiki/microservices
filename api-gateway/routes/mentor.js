@@ -16,27 +16,44 @@ router.post('/',async (req, res) => {
     }
 })
 
-router.get('/', async (req, res) => {
-    const mentor =  await axios.get('http://localhost:8000/api/mentors');
-    return res.json(mentor.data);
-})
-
-router.put('/:id', async(req, res) =>{
+router.get('/',async (req, res) => {
     try {
-        const mentor = api.put(`/mentors/${req.params.id}`,req.body);
+        const mentor =  await api.get('mentors');
         return res.status(200).json(mentor.data);
     } catch (error) {
         return res.status(error.response.status).json(error.response.data)
     }
 })
 
-router.delete('/:id', async(req, res) => {
+router.get("/:id", async (req,res)=>{
     try {
-       const message = api.delete(`/menotrs/${req.params.id}`);
-       return res.status(200).json(message.data);
+        const id = req.params.id
+
+        const mentor = await api.get(`/mentors/${id}`);
+
+        return res.status(200).json(mentor.data)
     } catch (error) {
-       return res.status(error.response.status).json(error.response.data) 
+        return res.status(error.response.status).json(error.response.data)
     }
 })
+
+router.put("/:id",  async(req, res)=>{
+    try {
+        // return res.json("kuntul ai")
+        const course = await api.put(`/mentors/${req.params.id}`, req.body)
+        return res.status(200).json(course.data)
+    } catch (error) {
+        return res.status(error.response.status).json(error.response.data)
+    }
+})
+
+router.delete("/:id",  async (req, res) => {
+    try {
+        const response = await api.delete(`/mentors/${req.params.id}`);
+        return res.status(response.status).json(response.data);
+    } catch (error) {
+        return res.status(error.response.status).json(error.response.data);
+    }
+});
 
 module.exports = router;

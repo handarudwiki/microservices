@@ -7,6 +7,7 @@ const v = new validator()
 
 const register = async (req, res) => {
     try {
+        
         const schema = {
             name : 'string|empty:false',
             email : 'email|empty:false',
